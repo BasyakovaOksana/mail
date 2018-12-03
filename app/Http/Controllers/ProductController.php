@@ -14,17 +14,8 @@ class ProductController extends Controller
      */
     public function index() {
         // Вытащить все продукты из БД
-//        $products = Product::all();
-
-        // имитация того, что пришло из БД
-        $products = [
-            0 => [
-                'id' => '1',
-                'title' => 'title 1',
-                'content' => 'content 1',
-                'price' => '10.12'
-            ]
-        ];
+       $products = Product::all();
+       // вернуть представление и передаем туда переменную products
         return view('products.index', compact('products'));
     }
 
@@ -35,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        // view create.blade.php
+        // вернуть представление форму создания products
         return view('products.create');
     }
 
@@ -46,19 +37,12 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        Product::create($request->all());
-        return redirect(route('products.index'));
-
+    {   
         // принимает данные из form
-        // $request->all();
-        // $request->input('title');
-        // $request->input('content');
-//        $product = new Product();
-//        $product->title=$request->input('title');
-//        $product->content=$request->input('content');
-//        $product->save();
-//return redirect(route('products.index'));
+        // Создаем и сохраняем в БД наши product
+        Product::create($request->all());
+        // редирект на список продуктов
+        return redirect(route('products.index'));
     }
 
     /**
@@ -68,7 +52,8 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
-    {
+    {   
+        // вернуть представление одного products и передаем туда переменную
         return view('products.show', compact('product'));
 
     }
@@ -81,9 +66,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        // форма редактирование
-        // edit.blade.php
-        // view edit.blade.php
+        // вернуть представление редактирования одного products и передаем туда переменную product
         return view('products.edit', compact('product'));
     }
 
@@ -95,8 +78,12 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Product $product)
-    {
-        Product::update($request->all());
+    {   
+        // принимает данные из form
+        // И обновляем в БД наши product
+        Product::find($product->id)->update($request->all());
+
+        // редирект на список продуктов
         return redirect(route('products.index'));
     }
 
@@ -108,6 +95,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        Product::delete($product->id());
+        Product::find($product->id)->delete();
+
+        // редирект на список продуктов
+        return redirect(route('products.index'));
     }
 }
