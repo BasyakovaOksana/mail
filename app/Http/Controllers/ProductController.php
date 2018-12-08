@@ -12,7 +12,8 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {
+        $request->user()->authorizeRoles(['employee', 'manager']);
         // Вытащить все продукты из БД
        $products = Product::all();
        // вернуть представление и передаем туда переменную products
@@ -93,8 +94,9 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request, Product $product)
     {
+        $request->user()->authorizeRoles('manager');
         Product::find($product->id)->delete();
 
         // редирект на список продуктов
