@@ -42,3 +42,29 @@
 // https://laravel.com/docs/5.7/migrations#columns
 // https://laravel.com/docs/5.7/seeding
 // https://laravel.com/docs/5.7/queries
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
