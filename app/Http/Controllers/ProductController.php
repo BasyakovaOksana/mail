@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+// подключил класс где у нас валидация
+use App\Http\Requests\CreateProductRequest;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -37,13 +40,15 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    // вставил класс который унаследован от родительского request
+    public function store(CreateProductRequest $request)
     {   
         // принимает данные из form
         // Создаем и сохраняем в БД наши product
         Product::create($request->all());
         // редирект на список продуктов
-        return redirect(route('products.index'));
+        return redirect(route('products.index'))
+            ->with('success', 'Продукт успешно создан');
     }
 
     /**
@@ -85,7 +90,9 @@ class ProductController extends Controller
         Product::find($product->id)->update($request->all());
 
         // редирект на список продуктов
-        return redirect(route('products.index'));
+        // with записывает в сессию пару ключ значение
+        return redirect(route('products.index'))
+            ->with('updated', 'Продукт успешно обновлен');
     }
 
     /**

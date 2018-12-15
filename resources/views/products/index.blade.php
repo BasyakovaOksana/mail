@@ -4,7 +4,8 @@
 <div style="margin-bottom: 15px;">
     <a href="{{ route('products.create')}}" class="btn btn-primary"> Создать товар</a>
 </div>
-    <table class="table table-striped table-bordered table-hover">
+@include('alert.msg')
+<table class="table table-striped table-bordered table-hover">
         <tr>
             <th>Title</th>
             <th>Content</th>
